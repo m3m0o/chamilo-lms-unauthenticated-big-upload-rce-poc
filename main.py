@@ -3,6 +3,13 @@ from exploit import ChamiloBigUploadExploit
 from os import system
 
 
+def check_extension(filename: str, extension: str) -> str:
+    if not filename.endswith(f'.{extension}'):
+        return f'{filename}.{extension}'
+
+    return filename
+
+
 def scan_action() -> None:
     system('clear')
 
@@ -22,6 +29,8 @@ def webshell_action() -> None:
 
     if not filename:
         filename = 'webshell.php'
+
+    filename = check_extension(filename, 'php')
 
     result = exploit.send_webshell(filename)
 
@@ -58,6 +67,9 @@ def revshell_action() -> None:
 
     if not bash_revshell_filename:
         bash_revshell_filename = 'revshell.sh'
+
+    webshell_filename = check_extension(webshell_filename, 'php')
+    bash_revshell_filename = check_extension(bash_revshell_filename, 'sh')
 
     system('clear')
 
