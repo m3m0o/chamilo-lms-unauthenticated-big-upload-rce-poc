@@ -1,4 +1,4 @@
-# Chamilo LMS Unauthenticated Big Upload File RCE
+# Chamilo LMS Unauthenticated Big Upload File RCE PoC
 
 This is a script written in Python that allows the exploitation of the **Chamilo's LMS** software security flaw described in **CVE-2023-4220**.  The system is vulnerable in versions preceding **1.11.24**.
 
